@@ -8,5 +8,5 @@ all:
 docker-build: docker-build-crtpatch
 
 docker-build-crtpatch:
-        docker build -t ${TAG}:production ./
+	docker build -t ${TAG}:prod ./
 
