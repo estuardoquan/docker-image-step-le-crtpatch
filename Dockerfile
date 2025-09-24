@@ -7,11 +7,11 @@ ENV STEPPATH=/var/local/step
 ENV STEP_ROOT="${STEPPATH}/root_ca.crt"
 ENV SITECRT="${STEPPATH}/site.crt"
 ENV SITEKEY="${STEPPATH}/site.key"
-ENV STEP_RENEW_PERIOD="12h"  # More frequent checks for production
-ENV STEP_CA_URL="https://acme-v02.api.letsencrypt.org/directory"  # Let's Encrypt production
-ENV STEP_EMAIL=""  # Required for Let's Encrypt account
-ENV STEP_DOMAIN=""  # Primary domain for cert
-ENV STEP_SANS=""  # Comma-separated SANs (optional)
+ENV STEP_RENEW_PERIOD="12h"
+ENV STEP_CA_URL="https://acme-v02.api.letsencrypt.org/directory"
+ENV STEP_EMAIL=""
+ENV STEP_DOMAIN=""
+ENV STEP_SANS=""
 
 # Copy entrypoint script
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
