@@ -1,26 +1,18 @@
-FROM smallstep/step-cli:latest
+FROM smallstep/step-cli
 
 USER root
 
-# Environment variables for production
 ENV STEPPATH=/var/local/step
-ENV STEP_ROOT="${STEPPATH}/root_ca.crt"
+ENV STEP_RENEW_PERIOD="1m"
+ENV STEP_DOMAIN="balraug.com"
+ENV STEP_SANS="*.balraug.com"
+ENV STEP_EMAIL="estuardo.quan@gmail.com"
+
 ENV SITECRT="${STEPPATH}/site.crt"
 ENV SITEKEY="${STEPPATH}/site.key"
-ENV STEP_RENEW_PERIOD="12h"
-ENV STEP_CA_URL="https://acme-v02.api.letsencrypt.org/directory"
-ENV STEP_EMAIL=""
-ENV STEP_DOMAIN=""
-ENV STEP_SANS=""
 
-# Copy entrypoint script
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-
-# Create directories with strict permissions and install dependencies
 RUN mkdir -p ${STEPPATH} && \
-    chown -R step:step ${STEPPATH} && \
-    chmod 700 ${STEPPATH} && \
-    chmod +x /docker-entrypoint.sh
+    chown -R step:step ${STEPPATH}
 
 WORKDIR ${STEPPATH}
 
@@ -28,10 +20,9 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 USER step
 
-# Default command: Renew certs in daemon mode
-CMD step ca renew --daemon \
-    --renew-period "${STEP_RENEW_PERIOD}" \
-    --ca-url "${STEP_CA_URL}" \
-    --email "${STEP_EMAIL}" \
-    "${SITECRT}" \
-    "${SITEKEY}"
+CMD step ca certificate ${STEP_DOMAIN} ${SITECRT} ${SITEKEY} \
+    --acme https://acme-staging-v02.api.letsencrypt.org/directory\
+    --email ${STEP_EMAIL} \
+    --sans localhost \
+    --sans ${STEP_SANS}
+
