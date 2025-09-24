@@ -20,10 +20,7 @@ COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN mkdir -p ${STEPPATH} && \
     chown -R step:step ${STEPPATH} && \
     chmod 700 ${STEPPATH} && \
-    chmod +x /docker-entrypoint.sh && \
-    # Install curl for healthcheck and debugging
-    apt-get update && apt-get install -y --no-install-recommends curl && \
-    rm -rf /var/lib/apt/lists/*
+    chmod +x /docker-entrypoint.sh
 
 WORKDIR ${STEPPATH}
 
