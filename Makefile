@@ -3,7 +3,7 @@ IMAGE=crtpatch
 
 TAG=${AUTHOR}/${IMAGE}
 
-all:
+all: docker-build
 
 docker-build: docker-build-crtpatch
 
