@@ -16,8 +16,6 @@ RUN mkdir -p ${STEPPATH} && \
 
 WORKDIR ${STEPPATH}
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
 USER step
 
 CMD step ca certificate ${STEP_DOMAIN} ${SITECRT} ${SITEKEY} \
